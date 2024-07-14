@@ -1,16 +1,19 @@
 package chip8
 
-// 5 bytes represent a number in binary,e.g.
-// the number 5 drawn using binray is
-//
-//  "5"          binary         Hex
-//
-// ****         11110000        0xF0
-// *  					10000000        0x80
-// ****   --->  11110000  --->  0xF0
-//    *         00010000        0x10
-// ****         11110000        0xF0
-//
+/**
+
+	5 bytes represent a number in binary,e.g.
+	the number 5 drawn using binray is
+
+	 "5"          binary         Hex
+
+	****         11110000        0xF0
+	*  			 10000000        0x80
+	****   --->  11110000  --->  0xF0
+	   *         00010000        0x10
+	****         11110000        0xF0
+
+**/
 var NUMBER_SPRITES = []uint8{
 	0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
 	0x20, 0x60, 0x20, 0x20, 0x70, // 1
@@ -29,5 +32,3 @@ var NUMBER_SPRITES = []uint8{
 	0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
 	0xF0, 0x80, 0xF0, 0x80, 0x80, // F
 }
-
-

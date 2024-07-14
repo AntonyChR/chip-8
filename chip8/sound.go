@@ -13,20 +13,21 @@ import (
 )
 
 const (
-	PI 				= 3.14159
-	TONE      = 1000// Hz
-	SAMPLES   = 44100 
-	D_PHASE   = 2 * PI * TONE / SAMPLES
+	PI      = 3.14159
+	TONE    = 1000 // Hz
+	SAMPLES = 44100
+	D_PHASE = 2 * PI * TONE / SAMPLES
 )
 
 var phase float64
+
 //export SineWave
 func SineWave(userdata unsafe.Pointer, stream *C.Uint8, length C.int) {
 	n := int(length)
 	hdr := reflect.SliceHeader{Data: uintptr(unsafe.Pointer(stream)), Len: n, Cap: n}
 	buf := *(*[]C.Uint8)(unsafe.Pointer(&hdr))
 
-	for i := 0; i < n; i ++ {
+	for i := 0; i < n; i++ {
 		buf[i] = C.Uint8((math.Sin(phase) + 0.9999) * 128)
 		phase += D_PHASE
 	}
