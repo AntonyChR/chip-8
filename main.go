@@ -100,6 +100,8 @@ func main() {
 				cpu.St--
 				if cpu.St == 0{
 					sdl.PauseAudio(true)
+				} else {
+					sdl.PauseAudio(false)
 				}
 			}
 
