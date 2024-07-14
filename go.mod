@@ -1,4 +1,4 @@
-module github.com/AntonyChR/chip-8
+module AntonyChR/chip-8-golang
 
 go 1.22.3
 

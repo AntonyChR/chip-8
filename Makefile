@@ -1,5 +1,5 @@
 run:
-	go run main.go -rom ./roms/PONG
+	go run main.go -rom ./roms/INVADERS
 debug:
 	go build -gcflags="-N -L" -o chip8
 build:

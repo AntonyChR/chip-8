@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	chip8 "github.com/AntonyChR/chip-8/chip8"
+	chip8 "AntonyChR/chip-8-golang/chip8"
 	sdl "github.com/veandco/go-sdl2/sdl"
 )
 
