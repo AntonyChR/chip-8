@@ -78,7 +78,7 @@ func main() {
 
 		if sdl.GetTicks64()-cycles > 1 {
 			if cpu.WaitKey == -1 {
-				chip8.Step(&cpu)
+				chip8.Procces_opcode(&cpu)
 			} else {
 				var key uint8
 				for key = 0; key <= 0xF; key++ {

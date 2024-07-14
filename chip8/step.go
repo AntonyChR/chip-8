@@ -4,7 +4,7 @@ import (
 	"math/rand/v2"
 )
 
-func Step(cpu *CPU){
+func Procces_opcode(cpu *CPU){
 		opcode := (uint16(cpu.Mem[cpu.Pc]) << 8) | uint16(cpu.Mem[cpu.Pc+1])
 		cpu.Pc = (cpu.Pc + 2) & 0xFFF
 
