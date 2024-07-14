@@ -18,8 +18,6 @@ const (
 	WINDOW_HEIGHT = 320
 
 	PIXEL_SIZE = 10
-
-	FPS = 30
 )
 
 func main() {
@@ -64,10 +62,11 @@ func main() {
 	sdl.PauseAudio(true)
 	defer sdl.CloseAudio()
 
-	var cycles uint64 = 0
-	var lastTick uint64 = 0
-
+	screenFrecuency := 60
+	deltaTime := 1000 / screenFrecuency // ms
+	stepsPerCycle := 16
 	running := true
+
 	for running {
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 			switch event.(type) {
@@ -76,38 +75,30 @@ func main() {
 			}
 		}
 
-		if sdl.GetTicks64()-cycles > 1 {
-			if cpu.WaitKey == -1 {
-				chip8.Procces_opcode(&cpu)
-			} else {
-				var key uint8
-				for key = 0; key <= 0xF; key++ {
-					if chip8.IsKeyPressed(key) {
-						cpu.V[cpu.WaitKey] = key
-						cpu.WaitKey = -1
-						break
-					}
-				}
-			}
-			cycles = sdl.GetTicks64()
+		for range stepsPerCycle {
+			cpu.Step()
 		}
 
-		if sdl.GetTicks64()-lastTick > (1000 / FPS) {
-			if cpu.Dt != 0 {
-				cpu.Dt--
-			}
-			if cpu.St != 0 {
-				cpu.St--
-				if cpu.St == 0{
-					sdl.PauseAudio(true)
-				} else {
-					sdl.PauseAudio(false)
-				}
-			}
-
-			render(renderer, &cpu)
-			lastTick = sdl.GetTicks64()
+		// The delay timer is active whenever the delay timer register (DT) is non-zero.
+		// This timer does nothing more than subtract 1 from the value of DT at a rate of 60Hz.
+		// When DT reaches 0, it deactivates.
+		if cpu.Dt > 0 {
+			cpu.Dt--
 		}
+
+		// The sound timer is active whenever the sound timer register (ST) is non-zero.
+		// This timer also decrements at a rate of 60Hz, however, as long as ST's value is greater
+		// than zero, the Chip-8 buzzer will sound. When ST reaches zero, the sound timer deactivates.
+		if cpu.St > 0 {
+			cpu.St--
+			sdl.PauseAudio(false)
+		} else {
+			sdl.PauseAudio(true)
+		}
+
+		render(renderer, &cpu)
+
+		sdl.Delay(uint32(deltaTime))
 	}
 }
 
