@@ -55,15 +55,24 @@ func main() {
 	}
 	defer renderer.Destroy()
 
+	audioSpec := chip8.CreateAudioSpec()
+	if err := sdl.OpenAudio(audioSpec, nil); err != nil {
+		log.Println(err)
+		return
+	}
+
+	sdl.PauseAudio(true)
+	defer sdl.CloseAudio()
+
 	var cycles uint64 = 0
 	var lastTick uint64 = 0
 
-	isRunning := true
-	for isRunning {
+	running := true
+	for running {
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 			switch event.(type) {
 			case *sdl.QuitEvent:
-				isRunning = false
+				running = false
 			}
 		}
 
@@ -89,11 +98,14 @@ func main() {
 			}
 			if cpu.St != 0 {
 				cpu.St--
+				if cpu.St == 0{
+					sdl.PauseAudio(true)
+				}
 			}
+
 			render(renderer, &cpu)
 			lastTick = sdl.GetTicks64()
 		}
-
 	}
 }
 

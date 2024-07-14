@@ -2,6 +2,8 @@ package chip8
 
 import (
 	"math/rand/v2"
+
+	"github.com/veandco/go-sdl2/sdl"
 )
 
 func Step(cpu *CPU){
@@ -188,6 +190,10 @@ func Step(cpu *CPU){
 			case 0x18:
 				// Fx07 - LD ST V[x], ST (sound timer)= V[x]
 				cpu.St = cpu.V[x]
+				if(cpu.St != 0){
+					println("sound on!!")
+					sdl.PauseAudio(false)
+				}
 			case 0x1E:
 				cpu.I += uint16(cpu.V[x])
 			case 0x29:
