@@ -9,7 +9,7 @@ Install dependencies
 go mod tidy
 ```
 
-
+run emulator
 ```sh
 go run main.go -rom ./roms/INVADERS
 ```
