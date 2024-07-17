@@ -8,12 +8,12 @@ import (
 	The computers which originally used the Chip-8 Language had a 16-key
 	hexadecimal keypad with the following layout:
 
-	original              remaped
+	original        remaped
 
-	1	2	3	C         1 2 3 4
-	4	5	6	D         q w e r
-	7	8	9	E         a s d f
-	A	0	B	F         a s d f
+	1 2 3 C         1 2 3 4
+	4 5 6 D         q w e r
+	7 8 9 E         a s d f
+	A 0 B F         a s d f
 **/
 
 var EMULATOR_KEYS = []int{
